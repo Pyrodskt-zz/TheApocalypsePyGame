@@ -12,6 +12,7 @@ pygame.init()
 clock = pygame.time.Clock()
 pygame.display.set_caption('The Apocalypse')
 
+
 # set the screen size and background
 screen = pygame.display.set_mode((1080, 720))
 background = pygame.image.load('assets/bg.jpg')

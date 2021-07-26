@@ -3,6 +3,7 @@ import random
 import pygame
 
 
+
 class Monster(pygame.sprite.Sprite):
 
     def __init__(self, game):

@@ -3,6 +3,7 @@ from Player import Player
 from Monster import Monster
 
 
+
 class Game:
     def __init__(self):
         self.all_player = pygame.sprite.Group()
