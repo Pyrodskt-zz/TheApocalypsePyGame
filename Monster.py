@@ -24,11 +24,17 @@ class Monster(pygame.sprite.Sprite):
     def damage(self, amount):
         self.health -= amount
 
-        if self.health <= 0:
-            self.rect.x = 1000
-            self.health = self.maxhealth
+        if self.health <= 0 and self.game.nb_monsters !=0:
+            self.kill()
+            #self.rect.x = 1000
+            #self.health = self.maxhealth
             self.game.score += 1
-            print('score :', self.game.score)
+            self.game.nb_monsters -= 1
+            self.game.spawn_monster()
+        else:
+            self.kill()
+            self.game.score += 1
+            self.game.nb_monsters -= 1
 
     def forward(self):
 

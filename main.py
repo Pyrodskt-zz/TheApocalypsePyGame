@@ -32,8 +32,10 @@ while running:
     screen.blit(game.player.cursor_img,
                 (m_pos[0] - game.player.cursor_img.get_width() / 2, m_pos[1] - game.player.cursor_img.get_height() / 2))
     # rotation of the cursor
-    label = myfont.render('Score : ' + str(game.score), (0, 0, 0), (255, 255, 0))
-    screen.blit(label, (10, 10))
+    label_score = myfont.render('Score : ' + str(game.score), (0, 0, 0), (255, 255, 0))
+    label_enemy = myfont.render('Enemys remaining :' + str(game.nb_monsters), (0, 0, 0), (255, 255, 0))
+    screen.blit(label_enemy, (600, 10))
+    screen.blit(label_score, (10, 10))
     game.player.rotate_cursor()
     game.all_monster.draw(screen)
     game.player.update_health_bar(screen)
@@ -51,6 +53,8 @@ while running:
         # update position of each projectile (view)
     game.player.all_projectiles.draw(screen)
     pygame.display.flip()
+    if game.monsters_in_screen < game.max_monster and game.nb_monsters != 0:
+        game.spawn_monster()
 
     if not game.player.isJumping and game.player.rect.y < game.player.y_origin:
         game.player.rect.y += 5

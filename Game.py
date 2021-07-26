@@ -11,11 +11,16 @@ class Game:
         self.all_player.add(self.player)
         self.all_monster = pygame.sprite.Group()
         self.pressed = {}
-        self.nb_monster = 10
+        self.level = [1, 10]
+        self.max_monster = 3
+        self.monsters_in_screen = 0
+        self.nb_monsters = self.level[1]
+        self.spawn_monster()
         self.spawn_monster()
         self.spawn_monster()
 
     def spawn_monster(self):
+        self.monsters_in_screen += 1
         monster = Monster(self)
         self.all_monster.add(monster)
 
