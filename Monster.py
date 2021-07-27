@@ -8,7 +8,7 @@ class Monster(pygame.sprite.Sprite):
     def __init__(self, game):
         super().__init__()
         self.game = game
-        self.health = 20
+        self.health = 100
         self.maxhealth = 100
         self.attack = 0.3
         self.image = pygame.image.load('assets/mummy.png')
@@ -24,17 +24,12 @@ class Monster(pygame.sprite.Sprite):
     def damage(self, amount):
         self.health -= amount
 
-        if self.health <= 0 and self.game.nb_monsters !=0:
-            self.kill()
-            #self.rect.x = 1000
-            #self.health = self.maxhealth
-            self.game.score += 1
-            self.game.nb_monsters -= 1
-            self.game.spawn_monster()
-        else:
+        if self.health <= 0:
             self.kill()
             self.game.score += 1
-            self.game.nb_monsters -= 1
+            self.game.monsters_in_screen -=1
+
+
 
     def forward(self):
 

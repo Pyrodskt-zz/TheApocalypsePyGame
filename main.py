@@ -23,6 +23,10 @@ game = Game()
 running = True
 
 while running:
+    if game.monsters_in_screen < game.max_monster:
+        if game.nb_monsters > 0:
+            print('nb monsters :', game.nb_monsters)
+            game.spawn_monster()
     # update background at each frame
     screen.blit(background, (0, -200))
     # update the player position at each frame using the rectangle of the player and his position
@@ -36,10 +40,12 @@ while running:
     label_enemy = myfont.render('Enemys remaining :' + str(game.nb_monsters), (0, 0, 0), (255, 255, 0))
     screen.blit(label_enemy, (600, 10))
     screen.blit(label_score, (10, 10))
+
     game.player.rotate_cursor()
     game.all_monster.draw(screen)
     game.player.update_health_bar(screen)
     game.player.jump()
+
     # locking fps to 60
     clock.tick(60)
 
@@ -53,8 +59,7 @@ while running:
         # update position of each projectile (view)
     game.player.all_projectiles.draw(screen)
     pygame.display.flip()
-    if game.monsters_in_screen < game.max_monster and game.nb_monsters != 0:
-        game.spawn_monster()
+
 
     if not game.player.isJumping and game.player.rect.y < game.player.y_origin:
         game.player.rect.y += 5

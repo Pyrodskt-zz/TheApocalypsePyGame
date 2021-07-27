@@ -10,7 +10,7 @@ class Player(pygame.sprite.Sprite):
         self.game = game
         self.health = 100
         self.maxhealth = 100
-        self.attack = 25
+        self.attack = 100
         self.isJumping = False
         self.jumpCount = 10
         self.velocity = 8
