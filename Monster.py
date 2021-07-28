@@ -35,8 +35,8 @@ class Monster(pygame.sprite.Sprite):
 
         if not self.game.check_collision(self, self.game.all_player):
             if self.game.player.rect.x < self.rect.x:
-                self.rect.x -= self.velocity
+                    self.rect.x -= self.velocity
             else:
-                self.rect.x += self.velocity
+                    self.rect.x += self.velocity
         else:
             self.game.player.damage(self.attack)

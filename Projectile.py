@@ -29,7 +29,6 @@ class Projectile(pygame.sprite.Sprite):
         self.player.all_projectiles.remove(self)
 
     def move(self):
-        # self.rotate()
 
         self.f_x += self.change_x
         self.f_y += self.change_y

@@ -28,6 +28,9 @@ class Player(pygame.sprite.Sprite):
         self.rect.y = 500
         self.y_origin = 500
 
+        self.fire_rate = 1
+
+
     def lauch_projectile(self):
         mouse_x, mouse_y = pygame.mouse.get_pos()
         distance_x = (mouse_x - self.rect.x) - 145

@@ -4,22 +4,21 @@ from Monster import Monster
 
 
 class Game:
-    def __init__(self):
+    def __init__(self, selected_level):
         self.all_player = pygame.sprite.Group()
         self.score = 0
         self.player = Player(self)
         self.all_player.add(self.player)
         self.all_monster = pygame.sprite.Group()
         self.pressed = {}
-        self.max_monster = 3
+        self.levels = [[1, 3, 10],
+                      [2, 4, 20],
+                      [3, 5, 30],
+                      [4, 6, 40]]
+        self.selected_level = self.levels[selected_level]
+        self.nb_monsters = self.selected_level[2]
+        self.max_monster = self.selected_level[1]
         self.monsters_in_screen = 0
-        self.nb_monsters = 30
-
-        self.level = [[1, 10],
-                      [2, 20],
-                      [3, 50],
-                      [4, 500]]
-
 
     def spawn_monster(self):
         self.monsters_in_screen += 1

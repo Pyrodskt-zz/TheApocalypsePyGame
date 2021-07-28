@@ -19,7 +19,7 @@ background = pygame.image.load('assets/bg.jpg')
 myfont = pygame.font.SysFont("monospace", 25)
 
 # init of a new game obj which contain the player and the keyboard interactions
-game = Game()
+game = Game(2)
 running = True
 
 while running:
@@ -38,8 +38,12 @@ while running:
     # rotation of the cursor
     label_score = myfont.render('Score : ' + str(game.score), (0, 0, 0), (255, 255, 0))
     label_enemy = myfont.render('Enemys remaining :' + str(game.nb_monsters), (0, 0, 0), (255, 255, 0))
-    screen.blit(label_enemy, (600, 10))
-    screen.blit(label_score, (10, 10))
+    label_level = myfont.render('Level '+str(game.selected_level[0]), (0, 0, 0), (255, 255, 255, 0))
+    label_fps = myfont.render('FPS : '+str(int(clock.get_fps())), (0, 0, 0), (255, 255, 255, 0))
+    screen.blit(label_level, (450, 10))
+    screen.blit(label_enemy, (780, 10))
+    screen.blit(label_score, (150, 10))
+    screen.blit(label_fps, (10, 10))
 
     game.player.rotate_cursor()
     game.all_monster.draw(screen)
