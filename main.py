@@ -25,7 +25,6 @@ running = True
 while running:
     if game.monsters_in_screen < game.max_monster:
         if game.nb_monsters > 0:
-            print('nb monsters :', game.nb_monsters)
             game.spawn_monster()
     # update background at each frame
     screen.blit(background, (0, -200))

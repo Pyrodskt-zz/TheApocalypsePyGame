@@ -12,9 +12,9 @@ class Game:
         self.all_monster = pygame.sprite.Group()
         self.pressed = {}
         self.levels = [[1, 3, 10],
-                      [2, 4, 20],
-                      [3, 5, 30],
-                      [4, 6, 40]]
+                      [2, 3, 20],
+                      [3, 3, 30],
+                      [4, 3, 40]]
         self.selected_level = self.levels[selected_level]
         self.nb_monsters = self.selected_level[2]
         self.max_monster = self.selected_level[1]
