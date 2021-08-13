@@ -27,7 +27,7 @@ while running:
         if game.nb_monsters > 0:
             game.spawn_monster()
     # update background at each frame
-    screen.blit(background, (0, -200))
+    screen.blit(background, (-1000, -200))
     # update the player position at each frame using the rectangle of the player and his position
     screen.blit(game.player.image, game.player.rect)
     m_pos = pygame.mouse.get_pos()
