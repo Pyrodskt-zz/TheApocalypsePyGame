@@ -14,11 +14,10 @@ class Monster(pygame.sprite.Sprite):
         self.image = pygame.image.load('assets/mummy.png')
         self.rect = self.image.get_rect()
         self.randx = random.randint(0, 1)
-
         if self.randx:
             self.rect.x = random.randrange(800, 1000, step=100)
         else:
-            self.rect.x = random.randrange(100, 300, step =100)
+            self.rect.x = random.randrange(100, 300, step=100)
         self.rect.y = 540
         self.velocity = random.randrange(1, 5)
 
@@ -34,14 +33,12 @@ class Monster(pygame.sprite.Sprite):
             self.game.score += 1
             self.game.monsters_in_screen -=1
 
-
-
     def forward(self):
 
         if not self.game.check_collision(self, self.game.all_player):
             if self.game.player.rect.x < self.rect.x:
-                    self.rect.x -= self.velocity
+                self.rect.x -= self.velocity
             else:
-                    self.rect.x += self.velocity
+                self.rect.x += self.velocity
         else:
             self.game.player.damage(self.attack)
