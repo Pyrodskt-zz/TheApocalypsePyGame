@@ -81,7 +81,7 @@ while running:
         elif event.type == pygame.MOUSEBUTTONUP:
             game.pressed[event.type] = False
 
-            # another part of the security to ignore key kept pressed
+            # security to ignore key kept pressed and only count it one time
         elif event.type == pygame.KEYDOWN:
             game.pressed[event.key] = True
 
