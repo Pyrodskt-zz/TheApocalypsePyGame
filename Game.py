@@ -28,7 +28,6 @@ class Game:
         self.player.health = self.player.maxhealth
         self.is_playing = False
 
-
     def start(self):
         print(self.selected_level)
         self.nb_monsters = self.selected_level[2]
@@ -79,7 +78,8 @@ class Game:
             self.player.rect.y += 5
         if not self.player.isJumping and self.player.rect.y > self.player.y_origin:
             self.player.rect.y -= 5
-            # keychecking if right or left using a list of the key used in the game. Security to handle only 1 strike event if keeping pressed
+            # keychecking if right or left using a list of the key used in the game. Security to handle only 1 strike
+            # event if keeping pressed
         if self.pressed.get(pygame.K_d) and self.player.rect.x + self.player.rect.width < screen.get_width():
             self.player.move_right()
         if self.pressed.get(pygame.K_q) and self.player.rect.x > 0:

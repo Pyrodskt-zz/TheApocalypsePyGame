@@ -11,7 +11,7 @@ class Monster(pygame.sprite.Sprite):
         self.health = 100
         self.maxhealth = 100
         self.attack = 0.3
-        self.image = pygame.image.load('assets/mummy.png')
+        self.image = pygame.image.load('assets/mummy.png').convert_alpha()
         self.rect = self.image.get_rect()
         self.randx = random.randint(0, 1)
         if self.randx:

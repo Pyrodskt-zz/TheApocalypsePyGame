@@ -9,7 +9,7 @@ class Projectile(pygame.sprite.Sprite):
         super().__init__()
         self.player = player
 
-        self.image = pygame.image.load('assets/projectile.png')
+        self.image = pygame.image.load('assets/projectile.png').convert_alpha()
         self.image = pygame.transform.scale(self.image, (50, 50))
         self.origin_image = self.image
 
