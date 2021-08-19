@@ -1,5 +1,5 @@
 import math
-
+from win32api import GetSystemMetrics
 import pygame
 from pygame.time import Clock
 
@@ -7,17 +7,17 @@ from Game import Game
 
 # init of the game obj
 pygame.init()
-
+print(f'{GetSystemMetrics(0)}x{GetSystemMetrics(1)}')
 # init of the timer to set the fps limit
 clock = pygame.time.Clock()
 pygame.display.set_caption('The Apocalypse')
 
 # set the screen size and background
 screen = pygame.display.set_mode((1080, 720))
-background = pygame.image.load('assets/bg.jpg')
+background = pygame.image.load('assets/bg.jpg').convert_alpha()
 
 # banner of the main menu
-banner = pygame.image.load('assets/banner.png')
+banner = pygame.image.load('assets/banner.png').convert_alpha()
 # resize of the image of the banner
 banner = pygame.transform.scale(banner, (500, 500))
 banner_rect = banner.get_rect()
@@ -25,11 +25,12 @@ banner_rect = banner.get_rect()
 banner_rect.x = math.ceil(screen.get_width() / 4)
 
 # button of the main menu
-play_button = pygame.image.load('assets/button.png')
+play_button = pygame.image.load('assets/button.png').convert_alpha()
 play_button = pygame.transform.scale(play_button, (400, 150))
 play_button_rect = play_button.get_rect()
 play_button_rect.x = math.ceil(screen.get_width() / 3.33)
 play_button_rect.y = math.ceil(screen.get_height()/2) + 100
+
 
 # create a font with color and size
 myfont = pygame.font.SysFont("monospace", 25)
@@ -40,7 +41,7 @@ running = True
 
 while running:
     # set FPS
-    clock.tick(240)
+    clock.tick(90)
     # update background at each frame
     screen.blit(background, (-1000, -200))
 
