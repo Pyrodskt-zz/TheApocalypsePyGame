@@ -45,6 +45,8 @@ class Player(pygame.sprite.Sprite):
     def damage(self, amount):
         if self.health - amount > amount:
             self.health -= amount
+        else:
+            self.game.game_over()
 
     def rotate_cursor(self):
         # cursor image rotation speed
@@ -58,7 +60,8 @@ class Player(pygame.sprite.Sprite):
             self.rect.x += self.velocity
 
     def move_left(self):
-        self.rect.x -= self.velocity
+        if not self.game.check_collision(self, self.game.all_monster):
+            self.rect.x -= self.velocity
 
     def jump(self):
         # Check if mario is jumping and then execute the
@@ -69,7 +72,6 @@ class Player(pygame.sprite.Sprite):
                 if self.jumpCount < 0:
                     neg = -1
                 self.rect.y -= (self.jumpCount ** 2) * 0.4 * neg
-                print(self.rect.y)
                 self.jumpCount -= 1
             else:
                 self.isJumping = False

@@ -16,6 +16,18 @@ pygame.display.set_caption('The Apocalypse')
 screen = pygame.display.set_mode((1080, 720))
 background = pygame.image.load('assets/bg.jpg')
 
+#banner of the main menu
+banner = pygame.image.load('assets/banner.png')
+banner = pygame.transform.scale(banner, (500, 500))
+banner_rect = banner.get_rect()
+banner_rect.x = math.ceil(screen.get_width() / 4)
+
+#button of the main menu
+play_button = pygame.image.load('assets/button.png')
+play_button = pygame.transform.scale(play_button, (400, 150))
+play_button_rect = play_button.get_rect()
+play_button_rect.x = math.ceil(screen.get_width() / 3.33)
+play_button_rect.y = math.ceil(screen.get_height()/2) + 100
 myfont = pygame.font.SysFont("monospace", 25)
 
 # init of a new game obj which contain the player and the keyboard interactions
@@ -23,59 +35,18 @@ game = Game(2)
 running = True
 
 while running:
-    if game.monsters_in_screen < game.max_monster:
-        if game.nb_monsters > 0:
-            game.spawn_monster()
+    clock.tick(60)
     # update background at each frame
     screen.blit(background, (-1000, -200))
-    # update the player position at each frame using the rectangle of the player and his position
-    screen.blit(game.player.image, game.player.rect)
-    m_pos = pygame.mouse.get_pos()
-    # update the target scope position at each frame
-    screen.blit(game.player.cursor_img,
-                (m_pos[0] - game.player.cursor_img.get_width() / 2, m_pos[1] - game.player.cursor_img.get_height() / 2))
-    # rotation of the cursor
-    label_score = myfont.render('Score : ' + str(game.score), (0, 0, 0), (255, 255, 0))
-    label_enemy = myfont.render('Enemys remaining :' + str(game.nb_monsters), (0, 0, 0), (255, 255, 0))
-    label_level = myfont.render('Level '+str(game.selected_level[0]), (0, 0, 0), (255, 255, 255, 0))
-    label_fps = myfont.render('FPS : '+str(int(clock.get_fps())), (0, 0, 0), (255, 255, 255, 0))
-    screen.blit(label_level, (450, 10))
-    screen.blit(label_enemy, (780, 10))
-    screen.blit(label_score, (150, 10))
-    screen.blit(label_fps, (10, 10))
 
-    game.player.rotate_cursor()
-    game.all_monster.draw(screen)
-    game.player.update_health_bar(screen)
-    game.player.jump()
+    if game.is_playing:
+        game.update(screen, myfont, clock)
 
-    # locking fps to 60
-    clock.tick(60)
+    else:
+        screen.blit(play_button, play_button_rect)
+        screen.blit(banner, banner_rect)
 
-    # update position of each projectile (model)
-    for p in game.player.all_projectiles:
-        p.move()
-
-    for m in game.all_monster:
-        m.forward()
-        m.update_health_bar(screen)
-        # update position of each projectile (view)
-    game.player.all_projectiles.draw(screen)
     pygame.display.flip()
-
-
-    if not game.player.isJumping and game.player.rect.y < game.player.y_origin:
-        game.player.rect.y += 5
-    if not game.player.isJumping and game.player.rect.y > game.player.y_origin:
-        game.player.rect.y -= 5
-        # keychecking if right or left using a list of the key used in the game. Security to handle only 1 strike event if keeping pressed
-    if game.pressed.get(pygame.K_d) and game.player.rect.x + game.player.rect.width < screen.get_width():
-        game.player.move_right()
-    if game.pressed.get(pygame.K_q) and game.player.rect.x > 0:
-        game.player.move_left()
-    if not game.player.isJumping:
-        if game.pressed.get(pygame.K_SPACE):
-            game.player.isJumping = True
 
     for event in pygame.event.get():
         # keyboard and mouse interraction
@@ -84,14 +55,19 @@ while running:
             pygame.quit()
             print('[main] --> Fermeture du jeu')
         elif event.type == pygame.MOUSEBUTTONDOWN:
-            click_state = pygame.mouse.get_pressed()
-            game.pressed[event.type] = True
-            if click_state[0]:
-                game.player.lauch_projectile()
-            if click_state[1]:
-                print('scroll click')
-            if click_state[2]:
-                print('left click')
+            if not game.is_playing:
+                if play_button_rect.collidepoint(event.pos):
+                    game.is_playing = True
+                    game.start()
+            else:
+                click_state = pygame.mouse.get_pressed()
+                game.pressed[event.type] = True
+                if click_state[0]:
+                    game.player.lauch_projectile()
+                if click_state[1]:
+                    print('scroll click')
+                if click_state[2]:
+                    print('left click')
         elif event.type == pygame.MOUSEBUTTONUP:
             game.pressed[event.type] = False
 
@@ -101,3 +77,4 @@ while running:
 
         elif event.type == pygame.KEYUP:
             game.pressed[event.key] = False
+
