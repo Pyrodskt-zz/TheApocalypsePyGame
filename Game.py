@@ -27,10 +27,10 @@ class Game:
         self.pressed = {}
 
         # levels [level, max nb of monsters appearing in the screen, nb monsters for this level]
-        self.levels = [[1, 3, 10],
-                       [2, 3, 20],
-                       [3, 3, 30],
-                       [4, 3, 40]]
+        self.levels = [[1, 3, 40],
+                       [2, 3, 80],
+                       [3, 3, 100],
+                       [4, 3, 150]]
         self.selected_level = self.levels[selected_level]
         self.nb_monsters = self.selected_level[2]
         self.max_monster = self.selected_level[1]
