@@ -14,7 +14,7 @@ class Projectile(pygame.sprite.Sprite):
 
         # load projectile img and resize
         self.image = pygame.image.load('assets/projectile.png').convert_alpha()
-        self.image = pygame.transform.scale(self.image, (50, 50))
+        self.image = pygame.transform.scale(self.image, (self.player.game.size.calc_x(50), self.player.game.size.calc_y(50)))
         self.origin_image = self.image
 
         # define projectile velocity
@@ -24,8 +24,8 @@ class Projectile(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
 
         # place it to the right arm of the player that's why +120 & +80
-        self.rect.x = player.rect.x + 120
-        self.rect.y = player.rect.y + 80
+        self.rect.x = player.rect.x + self.player.game.size.calc_x(120)
+        self.rect.y = player.rect.y + self.player.game.size.calc_y(80)
 
         # save the starting point of the projectile
         self.f_x = self.rect.x
@@ -53,5 +53,5 @@ class Projectile(pygame.sprite.Sprite):
             monster.damage(self.player.attack)
 
         # if getting out of the screen remove the projectile
-        if self.rect.x > 1080 or self.rect.y > 720:
+        if self.rect.x > self.player.game.size.screen[0] or self.rect.y > self.player.game.size.screen[1]:
             self.remove()

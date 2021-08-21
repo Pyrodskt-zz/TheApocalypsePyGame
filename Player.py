@@ -45,6 +45,7 @@ class Player(pygame.sprite.Sprite):
 
         # load player img, place it to its origin position
         self.image = pygame.image.load('assets/player.png').convert_alpha()
+        self.image = pygame.transform.scale(self.image, (self.game.size.calc_x(self.image.get_width()), self.game.size.calc_y(self.image.get_width())))
         self.rect = self.image.get_rect()
         self.rect.x = 420
         self.rect.y = 500
@@ -59,16 +60,16 @@ class Player(pygame.sprite.Sprite):
         mouse_x, mouse_y = pygame.mouse.get_pos()
 
         # adjust the distance because of the player img size and the start point of the projectile --> right arm
-        distance_x = (mouse_x - self.rect.x) - 145
-        distance_y = (mouse_y - self.rect.y) - 105
+        distance_x = (mouse_x - self.rect.x) - self.game.size.calc_x(145)
+        distance_y = (mouse_y - self.rect.y) - self.game.size.calc_y(105)
         angle = math.atan2(distance_y, distance_x)
         # after calculation add the projectile to the sprite group with the good angle
         self.all_projectiles.add(Projectile(self, angle))
 
     def update_health_bar(self, surface):
         # update player health bar
-        pygame.draw.rect(surface, (60, 63, 60), [self.rect.x + 45, self.rect.y, self.maxhealth, 5])
-        pygame.draw.rect(surface, (111, 210, 46), [self.rect.x + 45, self.rect.y, self.health, 5])
+        pygame.draw.rect(surface, (60, 63, 60), [ self.rect.x + self.game.size.calc_x(50), self.rect.y, self.game.size.calc_x(self.maxhealth), 5])
+        pygame.draw.rect(surface, (111, 210, 46), [self.rect.x + self.game.size.calc_x(50), self.rect.y, self.game.size.calc_x(self.health), 5])
 
     def damage(self, amount):
         # if player is taking damage

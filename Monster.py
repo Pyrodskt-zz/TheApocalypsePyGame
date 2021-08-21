@@ -1,7 +1,6 @@
 import random
-
 import pygame
-
+import math
 
 class Monster(pygame.sprite.Sprite):
 
@@ -20,7 +19,7 @@ class Monster(pygame.sprite.Sprite):
 
         # load img of monster and convert to alpha
         self.image = pygame.image.load('assets/mummy.png').convert_alpha()
-
+        self.image = pygame.transform.scale(self.image, (self.game.size.calc_x(self.image.get_width()), self.game.size.calc_y(self.image.get_height())))
         # get rectangle of the img to be able to handle interactions
         self.rect = self.image.get_rect()
 
@@ -42,8 +41,8 @@ class Monster(pygame.sprite.Sprite):
         self.velocity = random.randrange(1, 5)
 
     def update_health_bar(self, surface):
-        pygame.draw.rect(surface, (60, 63, 60), [self.rect.x + 12, self.rect.y - 20, self.maxhealth, 5])
-        pygame.draw.rect(surface, (111, 210, 46), [self.rect.x + 12, self.rect.y - 20, self.health, 5])
+        pygame.draw.rect(surface, (60, 63, 60), [self.rect.x + self.game.size.calc_x(12), self.rect.y - self.game.size.calc_y(20), self.game.size.calc_x(self.maxhealth), 5])
+        pygame.draw.rect(surface, (111, 210, 46), [self.rect.x + self.game.size.calc_x(12), self.rect.y - self.game.size.calc_y(20), self.game.size.calc_x(self.health), 5])
 
     def damage(self, amount):
         self.health -= amount

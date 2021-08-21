@@ -2,49 +2,51 @@ import math
 from win32api import GetSystemMetrics
 import pygame
 from pygame.time import Clock
-
+from Size import Size
 from Game import Game
 
 # init of the game obj
 pygame.init()
-print(f'{GetSystemMetrics(0)}x{GetSystemMetrics(1)}')
 # init of the timer to set the fps limit
 clock = pygame.time.Clock()
 pygame.display.set_caption('The Apocalypse')
 
 # set the screen size and background
-screen = pygame.display.set_mode((1080, 720))
-background = pygame.image.load('assets/bg.jpg').convert_alpha()
+screen = pygame.display.set_mode((GetSystemMetrics(0)-1, GetSystemMetrics(1)-60))
 
+#create object to convert the size of the imgs depending on the size of the screen
+size = Size(screen.get_width(), screen.get_height())
+
+background = pygame.image.load('assets/bg.jpg').convert_alpha()
 # banner of the main menu
 banner = pygame.image.load('assets/banner.png').convert_alpha()
 # resize of the image of the banner
-banner = pygame.transform.scale(banner, (500, 500))
+print(screen.get_height(), screen.get_width())
+banner = pygame.transform.scale(banner, (size.calc_x(500) , size.calc_y(500)))
 banner_rect = banner.get_rect()
 # get the middle position of the screen
 banner_rect.x = math.ceil(screen.get_width() / 4)
 
 # button of the main menu
 play_button = pygame.image.load('assets/button.png').convert_alpha()
-play_button = pygame.transform.scale(play_button, (400, 150))
+play_button = pygame.transform.scale(play_button, (size.calc_x(400), size.calc_y(150)))
 play_button_rect = play_button.get_rect()
-play_button_rect.x = math.ceil(screen.get_width() / 3.33)
-play_button_rect.y = math.ceil(screen.get_height()/2) + 100
+play_button_rect.x = math.ceil((screen.get_width() / 3.33))
+play_button_rect.y = math.ceil(screen.get_height()/2) + size.calc_y(100)
 
 
 # create a font with color and size
 myfont = pygame.font.SysFont("monospace", 25)
 
 # init of a new game obj which contain the player and the keyboard interactions
-game = Game(2)
+game = Game(0, size)
 running = True
 
 while running:
     # set FPS
     clock.tick(90)
     # update background at each frame
-    screen.blit(background, (-1000, -200))
-
+    screen.blit(background, (background.get_rect().x /2, -200))
     # check if game running or main menu running
     if game.is_playing:
         game.update(screen, myfont, clock)

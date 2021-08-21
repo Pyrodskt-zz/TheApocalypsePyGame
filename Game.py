@@ -6,9 +6,11 @@ from pygame.time import Clock
 
 
 class Game:
-    def __init__(self, selected_level):
+    def __init__(self, selected_level, size):
         # check if game running or main menu
         self.is_playing = False
+        self.size = size
+
 
         # create a sprite group to have the draw methods for group sprites
         self.all_player = pygame.sprite.Group()
@@ -27,7 +29,7 @@ class Game:
         self.pressed = {}
 
         # levels [level, max nb of monsters appearing in the screen, nb monsters for this level]
-        self.levels = [[1, 3, 40],
+        self.levels = [[1, 3, 10],
                        [2, 3, 80],
                        [3, 3, 100],
                        [4, 3, 150]]
