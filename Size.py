@@ -7,6 +7,10 @@ class Size:
         self.scale_x = (float(self.screen[0]) / 1080.0)
         self.scale_y = (float(self.screen[1]) / 720.0)
 
+
+        self.monster_size = ()
+
+
     def calc_x(self, size):
         return math.ceil(size * self.scale_x)
 

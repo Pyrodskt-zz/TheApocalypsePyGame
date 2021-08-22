@@ -19,7 +19,7 @@ class Monster(pygame.sprite.Sprite):
 
         # load img of monster and convert to alpha
         self.image = pygame.image.load('assets/mummy.png').convert_alpha()
-        self.image = pygame.transform.scale(self.image, (self.game.size.calc_x(self.image.get_width()), self.game.size.calc_y(self.image.get_height())))
+        self.image = pygame.transform.scale(self.image, (self.game.size.calc_x(128), self.game.size.calc_y(128)))
         # get rectangle of the img to be able to handle interactions
         self.rect = self.image.get_rect()
 
@@ -50,7 +50,8 @@ class Monster(pygame.sprite.Sprite):
         if self.health <= 0:
             self.kill()
             self.game.score += 1
-            self.game.monsters_in_screen -=1
+            self.game.monsters_in_screen -= 1
+
 
     def forward(self):
         # auto move forward depending player position
