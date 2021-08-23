@@ -39,7 +39,7 @@ play_button_rect.y = math.ceil(size.screen[1]/2) + size.calc_y(100)
 myfont = pygame.font.SysFont("monospace", 25)
 
 # init of a new game obj which contain the player and the keyboard interactions
-game = Game(2, size)
+game = Game(0, size)
 running = True
 
 while running:

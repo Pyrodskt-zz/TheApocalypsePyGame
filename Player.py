@@ -17,7 +17,7 @@ class Player(pygame.sprite.Sprite):
         self.health = self.maxhealth
 
         # set attack of the player --> 1 shoot monster
-        self.attack = 100
+        self.attack = 20
 
         # set player is not jumping
         self.isJumping = False
@@ -52,19 +52,22 @@ class Player(pygame.sprite.Sprite):
         self.y_origin = 500
 
         # set the fire rate, not used currently
-        self.fire_rate = 1
+        self.max_projectile = 10
+        self.nb_projectile = 0
 
     def lauch_projectile(self):
+        if(self.nb_projectile < self.max_projectile):
         # lauch projectile to the mouse coordinates
         # calculate the trajectory and pass it in parameters
-        mouse_x, mouse_y = pygame.mouse.get_pos()
+            self.nb_projectile += 1
+            mouse_x, mouse_y = pygame.mouse.get_pos()
 
-        # adjust the distance because of the player img size and the start point of the projectile --> right arm
-        distance_x = (mouse_x - self.rect.x) - self.game.size.calc_x(145)
-        distance_y = (mouse_y - self.rect.y) - self.game.size.calc_y(105)
-        angle = math.atan2(distance_y, distance_x)
-        # after calculation add the projectile to the sprite group with the good angle
-        self.all_projectiles.add(Projectile(self, angle))
+            # adjust the distance because of the player img size and the start point of the projectile --> right arm
+            distance_x = (mouse_x - self.rect.x) - self.game.size.calc_x(145)
+            distance_y = (mouse_y - self.rect.y) - self.game.size.calc_y(105)
+            angle = math.atan2(distance_y, distance_x)
+            # after calculation add the projectile to the sprite group with the good angle
+            self.all_projectiles.add(Projectile(self, angle))
 
     def update_health_bar(self, surface):
         # update player health bar

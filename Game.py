@@ -1,6 +1,8 @@
 import clock
 import pygame
 from Player import Player
+from Comets_event import CometFallEvent
+
 from Monster import Monster
 from pygame.time import Clock
 
@@ -29,14 +31,17 @@ class Game:
         self.pressed = {}
 
         # levels [level, max nb of monsters appearing in the screen, nb monsters for this level]
-        self.levels = [[1, 3, 10],
-                       [2, 3, 80],
-                       [3, 3, 100],
-                       [4, 3, 150]]
+        self.levels = [[1, 1, 0],
+                       [2, 2, 10],
+                       [3, 2, 15],
+                       [4, 2, 20]]
+
         self.selected_level = self.levels[selected_level]
         self.nb_monsters = self.selected_level[2]
         self.max_monster = self.selected_level[1]
         self.monsters_in_screen = 0
+
+        self.comet_event = CometFallEvent(self)
 
     def game_over(self):
         # restarting the game --> making everything come back to original state
@@ -89,9 +94,10 @@ class Game:
         self.all_monster.draw(screen)
         self.player.update_health_bar(screen)
 
+        self.comet_event.update_bar(screen)
         # check if player is jumping
         self.player.jump()
-
+        self.comet_event.add_percent()
         # update position of each projectile (model)
         for p in self.player.all_projectiles:
             p.move()
@@ -101,8 +107,15 @@ class Game:
             m.forward()
             m.update_health_bar(screen)
 
+        # comets fall
+        for c in self.comet_event.all_comets:
+            c.fall()
+
         # update position of all projectile
         self.player.all_projectiles.draw(screen)
+
+        # update position of all comets
+        self.comet_event.all_comets.draw(screen)
 
         # jump methods make the player img not coming back to original position but 5 px over or under so it is
         # correcting the problem

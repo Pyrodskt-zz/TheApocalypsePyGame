@@ -57,7 +57,7 @@ class Monster(pygame.sprite.Sprite):
         # auto move forward depending player position
         # check if collision with player
 
-        if not self.game.check_collision(self, self.game.all_player):
+        if not self.game.check_collision(self, self.game.all_player) or not self.game.check_collision(self, self.game.all_monster):
             if self.game.player.rect.x < self.rect.x:
                 self.rect.x -= self.velocity
             else:

@@ -51,7 +51,10 @@ class Projectile(pygame.sprite.Sprite):
         for monster in self.player.game.check_collision(self, self.player.game.all_monster):
             self.remove()
             monster.damage(self.player.attack)
+            self.player.nb_projectile -= 1
+
 
         # if getting out of the screen remove the projectile
-        if self.rect.x > self.player.game.size.screen[0] or self.rect.y > self.player.game.size.screen[1]:
+        if self.rect.x > self.player.game.size.screen[0] or self.rect.y > self.player.game.size.screen[1] or self.rect.x < 0 or self.rect.y < 0:
             self.remove()
+            self.player.nb_projectile -= 1
